@@ -48,7 +48,6 @@ public class Main extends StateBasedGame {
 	File file = new File("scores.txt");
     private AppGameContainer app;
     public class MainMenu extends BasicGameState{
-    	// ID we return to class 'Application'
     		public static final int ID = 0;
     		public Mouse mouse;
     		private Image Menu1;
@@ -73,9 +72,7 @@ public class Main extends StateBasedGame {
     		boolean show1=true;
     		boolean show2=true;
     		boolean show3=false;
-    		
     		Writer wr1;
-    		// init-method for initializing all resources
     		@Override
     		public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
     				app = (AppGameContainer) gc;
@@ -117,11 +114,9 @@ public class Main extends StateBasedGame {
             		}
         		}
 
-    		// render-method for all the things happening on-screen
+    		
     		@Override
     		public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-    			//g.drawString("Main Menu", Globals.scrWidth/3, 100);
-    			//g.drawString(x +"|"+y+"|"+ mouse.getX()+"|"+ mouse.getY()+"|"+Menu1.getHeight()+"|"+(Globals.scrHeight-y) , x, y+200);
     			if(show && var==false)
     				g.drawImage(Menu1, x, y);
     			else if (show==false && var==false)
@@ -152,15 +147,12 @@ public class Main extends StateBasedGame {
     					g.drawImage(Menu7, x1, y3);
     			}	
     		}
-
-    		// update-method with all the magic happening in it
     		@Override
     		public void update(GameContainer gc, StateBasedGame sbg, int arg2) throws SlickException {
     			try {
 					Writer wr = new FileWriter("scores.txt");
 					Collections.sort(listScores);
 					int index =1;
-					//listScores.remove(0);
 					for(int p=listScores.size()-1; p>=0;p--) {
 						wr.write(listScores.get(p).toString()+System.getProperty("line.separator"));
 						index++;
@@ -169,7 +161,7 @@ public class Main extends StateBasedGame {
 					}	
 					wr.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
     			
@@ -212,7 +204,7 @@ public class Main extends StateBasedGame {
     		}
     }
     public class Game extends BasicGameState{
-    	// ID we return to class 'Application'
+    	
     		public static final int ID = 1;
     		private boolean Right;
     		private boolean Left;
@@ -292,7 +284,7 @@ public class Main extends StateBasedGame {
     			g.drawString("Health: "+newShip.getHealth(), 100, 0);
     			g.drawString("[P] Pauza", 600, 0);
     			g.drawString("level: "+lvl, 800, 0);
-    			g.drawString(randomShieldNum+" "+shieldTimer, 700, 0);
+    			
     			if(shieldOn==false)
     				g.drawImage(spaceShip,	newShip.getX()*scale, newShip.getY()*scale);
     			else
@@ -341,9 +333,6 @@ public class Main extends StateBasedGame {
     				plyrExpl=false;
     			}
     				
-    			//g.drawString(newShip.getMinX()+ "|"+ newShip.getMaxX()+"|"+newShip.getMaxY(), newShip.getX()*scale+100, newShip.getY()*scale+10);
-    			//g.drawString(randomX+ "|"+ health.getWidth()+"|"+health.getHeight(), newShip.getX()*scale+100, newShip.getY()*scale+10);
-    			
     			if(showLvl&& lvl!=0) {
     				
     				g.drawString("level "+ lvl, Globals.scrWidth/2 ,   lvlY);
@@ -360,8 +349,7 @@ public class Main extends StateBasedGame {
 					else {
 						g.drawImage(enBulletImg, obj.getX()*scale, obj.getY()*scale);
 					}
-						///g.drawString(obj.getMinX()+ "|"+ obj.getMaxX()+"|"+obj.getMaxY()+"|"+obj.getMinY(), obj.getX()*scale, obj.getY()*scale+10);
-					
+						
     		
     			}
     			for(int f=0; f<starList.size(); f++) {
@@ -371,8 +359,7 @@ public class Main extends StateBasedGame {
     			for(int f=0; f<enemyList.size(); f++) {
 					ship obj=enemyList.get(f);
 					g.drawImage(enemyShip,	obj.getX()*scale, obj.getY()*scale);
-					//g.drawString(obj.getMinX()+ "|"+ obj.getMaxX()+ "|"+obj.getMinY(), obj.getX()*scale, obj.getY()*scale+10);
-    		
+					
     			}
     			if(isPaused)
     				g.drawImage(pauseImg, Globals.scrWidth/4, Globals.scrHeight/2);
@@ -387,8 +374,7 @@ public class Main extends StateBasedGame {
     					showHealth=false;
     					randomNum=rand.nextInt(10000);
     					healthHit=false;
-    					///randomX=rand.nextInt(Globals.scrWidth-10);
-    					
+    				
     				}
     				if(shieldTimer==randomShieldNum) {
     					showShield=true;
@@ -481,7 +467,7 @@ public class Main extends StateBasedGame {
     							it.remove();
     							plyrExpl=true; 
     							if(newShip.getHealth()<= 0 ) { 
-    								//newShip=null;
+    								
     								lvl=0;
     								listScores.add(score);
     								Collections.sort(listScores);
@@ -514,17 +500,7 @@ public class Main extends StateBasedGame {
     					}
     						
     					
-    				}/*
-    				for(int j=0; j<bulArray.size(); j++) {
-						for( int l=0; l<bulArray.size();l++){
-							bullet obj=bulArray.get(j);
-							bullet obj1=bulArray.get(l);
-							if(obj.getX()==obj1.getX() && obj.getY()==obj1.getY() && obj.isEnemy!=obj1.isEnemy) {
-								bulArray.remove(j);
-								//bulArray.remove(l);
-							}
-						}
-    				}*/	
+    				}	
     				for(int p=0; p<starList.size();p++) {
     					star obj=starList.get(p);
     					if(obj.getY() <=70)
