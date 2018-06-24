@@ -255,6 +255,7 @@ public class Main extends StateBasedGame {
     		boolean showShield=false;
     		boolean shieldStr=false;
     		boolean shieldHit=false;
+	    	boolean showFinalScore=false;
     		int numberOfShips=0;
     		int randomNum=rand.nextInt(10000)+8000;
     		int randomX=rand.nextInt(Globals.scrWidth-100);
@@ -324,6 +325,9 @@ public class Main extends StateBasedGame {
     					healthStr=false;
     				}	
     			}
+			if(showFinalScore) {
+    				g.drawString("You lost!!! Your final score: "+score + "\n*Press Enter to continue* ",Globals.scrWidth/2 ,Globals.scrHeight/2);
+    			}
     			if(expl) {
     				g.drawImage(explosion, expX*scale, expY*scale);
     				expl=false;
@@ -361,7 +365,7 @@ public class Main extends StateBasedGame {
 					g.drawImage(enemyShip,	obj.getX()*scale, obj.getY()*scale);
 					
     			}
-    			if(isPaused)
+    			if(isPaused && showFinalScore==false)
     				g.drawImage(pauseImg, Globals.scrWidth/4, Globals.scrHeight/2);
     		}	
     		@Override
@@ -467,13 +471,20 @@ public class Main extends StateBasedGame {
     							it.remove();
     							plyrExpl=true; 
     							if(newShip.getHealth()<= 0 ) { 
-    								
-    								lvl=0;
-    								listScores.add(score);
-    								Collections.sort(listScores);
-    								score=0;
-    								gc.reinit();
-    								sbg.enterState(0);
+    								showFinalScore=true;
+    								isPaused=true;
+    								move1=0;
+    	    							move5=0;
+    								Enter=gc.getInput().isKeyPressed(Input.KEY_ENTER);
+    								if(Enter) {
+    									showFinalScore=false;
+    									lvl=0;
+    									listScores.add(score);
+    									Collections.sort(listScores);
+    									score=0;
+    									gc.reinit();
+    									sbg.enterState(0);
+    								}
     								
     							}	
     						}
@@ -560,7 +571,7 @@ public class Main extends StateBasedGame {
     					bulArray.add(bul);
     				}
     				if(Pause) {
-    					if(isPaused) {
+    					if(isPaused&& showFinalScore==false) {
     						move1=1;
     						move5=5;
     						isPaused=false;
